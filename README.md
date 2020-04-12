@@ -23,6 +23,11 @@ Youtubeから最高画質、最高音質で動画をダウンロードするツ�
 - [ffmpeg](https://ffmpeg.zeranoe.com/builds/)
   - ダウンロードした動画のフォーマットを行う。
 
+以下は自作したもの
+
+- [GetIni.bat](https://github.com/Shogo596/Utils/blob/master/Batch/GetIni.bat)
+  - INIファイルの設定値の取得を行う。
+
 ## パラメータ
 コマンドライン引数の説明
 
