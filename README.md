@@ -18,6 +18,7 @@ Youtubeから最高画質、最高音質で動画をダウンロードするツ�
 
 - [youtube-dl](https://github.com/ytdl-org/youtube-dl)
   - Youtubeから動画をダウンロードする。他の動画サイトからもダウンロードできるみたいだが未検証。
+  - Youtube側の仕様変更に対応するために定期的に[更新](https://t-pirori.blogspot.com/2019/12/youtube-dl-Update.html)する必要がある。
 
 - [ffmpeg](https://ffmpeg.zeranoe.com/builds/)
   - ダウンロードした動画のフォーマットを行う。
