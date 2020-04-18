@@ -57,3 +57,7 @@ Download.bat "[ダウンロード元URL]" "[ダウンロード先ディレクト
 ```
 Download.bat "https://www.youtube.com/watch?v=VFdLm6gEEE4" "C:\Downloads"
 ```
+
+## メモ
+- `ERROR: unable to download video data: HTTP Error 403: Forbidden`のエラーが発生する場合は以下のコマンドを実行してキャッシュをリセットすると解消される場合がある。
+  - `youtube-dl --rm-cache-dir`
