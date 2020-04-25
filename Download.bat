@@ -4,6 +4,7 @@ rem ============================================================================
 rem 【Youtubeダウンローダー】
 rem 引数に指定したYoutubeのURLから最高画質、最高音質で動画をダウンロードする。
 rem ダウンロード先は設定ファイル（.ini）に記述する。
+rem (2020/04/25 追記)ニコニコ動画のダウンロードにも対応した。画質はベストエフォート。
 rem 
 rem 
 rem ◆使用ツール
@@ -66,7 +67,7 @@ if not "%~1"=="" (
 )
 rem URLの前後に「"」をつける。
 set URL=%URL:"=%
-set URL="%URL%"
+rem set URL="%URL%"
 
 rem 引数2が存在していればダウンロード先ディレクトリとして取得。
 if not "%~2"=="" (
@@ -80,11 +81,31 @@ echo 以下にダウンロードします。
 echo %DL_DIR_PATH%
 echo.
 
-bin\youtube-dl %URL% -f bestvideo[ext=mp4]+bestaudio[ext=m4a] --merge-output-format mp4 -o "%DL_DIR_PATH%\%%(title)s.%%(ext)s"
+rem URLにニコニコ動画のアドレスが含まれるかを判定。結果によってDLコマンドを分岐する。
+echo "%URL%" | find "www.nicovideo.jp" > NUL
+if %ERRORLEVEL%==0 goto :niconico
+
+rem デフォルト（youtube）のダウンロードは以下のコマンドで実施。
+:youtube
+	bin\youtube-dl "%URL%" -f bestvideo[ext=mp4]+bestaudio[ext=m4a] --merge-output-format mp4 -o "%DL_DIR_PATH%\%%(title)s.%%(ext)s"
+	goto :exit
+
+rem ニコニコ動画の場合は以下のコマンドで実施。
+rem DL途中で中断されやすいので繰り返し実行するようにする。
+:niconico
+	bin\youtube-dl "%URL%" -f best -o "%DL_DIR_PATH%\%%(title)s.%%(ext)s"
+	if not %ERRORLEVEL%==0 (
+		echo.
+		echo Retrying...
+		echo.
+		goto :niconico
+	)
+	goto :exit
 
 rem ----------------------------------------------------------------------------------------
 rem 終了処理
 rem ----------------------------------------------------------------------------------------
+:exit
 echo.
 echo ☆☆処理終了☆☆
 if %PAUSE_FLAG%==True pause
